@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Occhiali – Presentazione</title>
+  <link rel="stylesheet" href="css/presentazione.css">
+  <!-- Three.js e GSAP da CDN: si importano nei file js con
+       import ... from 'three'  e  import { gsap } from './animazioni.js' -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+        "gsap/": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- ===== 1. l'animazione degli occhiali ===== -->
+  <!-- non è un file .mp4: è il modello 3D ripreso da una "telecamera" che segue
+       una sequenza di inquadrature (le scrive video.js). Occupa tutta la larghezza dello schermo. -->
+  <section class="sezione-video">
+    <div class="intestazione">
+      <p class="sovratitolo">Presentazione</p>
+      <h1 class="titolo">Occhiali veloci</h1>
+    </div>
+
+    <div class="video" id="video-occhiali">
+      <p class="video-segnaposto">Caricamento…</p>
+
+      <!-- il nome dell'inquadratura, compare in basso a sinistra -->
+      <p class="video-didascalia"></p>
+
+      <!-- clic sull'animazione = pausa; il bottone per salvarla compare passando sopra col mouse -->
+      <button class="video-scarica">Scarica video</button>
+    </div>
+  </section>
+
+  <!-- ===== la descrizione degli occhiali ===== -->
+  <section class="sezione-descrizione">
+    <p class="descrizione-testo">
+      Occhiali veloci sono un occhiale dalla linea essenziale, pensato per essere leggero e
+      immediato da indossare. Il frontale bianco e sottile incornicia le lenti nere trasparenti, l'appoggio
+      per il naso tiene l'occhiale stabile sul viso e le cerniere permettono alle stanghette
+      di chiudersi e riporlo in un attimo.
+    </p>
+    <ul class="descrizione-dati">
+      <li><span>Parti</span> Davanti, lenti, appoggio naso, dietro, stanghette</li>
+      <li><span>Colore</span> Bianco</li>
+      <li><span>Lenti</span> Nere, trasparenti</li>
+      <li><span>Stanghette</span> Pieghevoli, con cerniera</li>
+    </ul>
+  </section>
+
+  <!-- ===== 2. la galleria delle viste ===== -->
+  <!-- le schede e le immagini le crea galleria.js "fotografando" il modello 3D -->
+  <section class="sezione-galleria">
+    <p class="sovratitolo">Galleria</p>
+    <h2 class="titolo-sezione">Tutte le viste</h2>
+    <div class="galleria-griglia"></div>
+  </section>
+
+  <!-- ===== 3. le stanghette che seguono il cursore ===== -->
+  <!-- il render lo disegna stanghette.js: cursore a sinistra = chiusi, a destra = aperti -->
+  <section class="sezione-stanghette">
+    <p class="sovratitolo">Interazione</p>
+    <h2 class="titolo-sezione">Apri e chiudi</h2>
+    <p class="testo-sezione">Muovi il cursore sull'immagine: verso sinistra le stanghette si chiudono, verso destra si aprono.</p>
+
+    <div class="render" id="render-stanghette">
+      <p class="render-segnaposto">Caricamento…</p>
+      <div class="render-indicatore">
+        <span>Chiusi</span>
+        <span class="render-binario"><span class="render-punto"></span></span>
+        <span>Aperti</span>
+      </div>
+      <p class="render-stato"></p>
+    </div>
+  </section>
+
+  <!-- ===== 4. l'esploso ===== -->
+  <!-- il bottone separa le parti e le rimonta (esploso.js) -->
+  <section class="sezione-esploso">
+    <div class="render-esploso" id="render-esploso">
+      <p class="render-segnaposto">Caricamento…</p>
+      <div class="esploso-etichette"></div>
+    </div>
+    <div class="esploso-intestazione">
+      <p class="sovratitolo">Esploso</p>
+      <h2 class="titolo-sezione">Le parti degli occhiali</h2>
+    </div>
+    <button class="esploso-bottone" disabled>Esplodi</button>
+  </section>
+
+  <!-- ===== 5. provali con la webcam ===== -->
+  <!-- il riconoscimento del viso mette sempre questo modello sul tuo volto (webcam.js + prova-webcam.js) -->
+  <section class="sezione-webcam">
+    <p class="sovratitolo">Provali</p>
+    <h2 class="titolo-sezione">Indossali con la webcam</h2>
+    <p class="testo-sezione">Accendi la webcam: il riconoscimento del viso trova occhi e naso e ti mette addosso gli Occhiali veloci, che seguono la testa quando ti muovi. Puoi anche scattarti una foto.</p>
+
+    <div class="webcam">
+      <!-- la copertina, finché la webcam è spenta -->
+      <div class="webcam-copertina">
+        <p>La webcam resta sul tuo computer: le immagini non vengono inviate da nessuna parte.</p>
+      </div>
+
+      <!-- la prova: video a specchio + occhiali 3D sopra (lo riempie prova-webcam.js) -->
+      <div class="prova" hidden>
+        <div class="prova-specchio">
+          <video class="prova-video" playsinline muted></video>
+        </div>
+        <p class="prova-messaggio"></p>
+        <button class="prova-scatta" hidden>Scatta foto</button>
+        <div class="prova-lampo"></div>
+        <div class="prova-foto" hidden>
+          <img class="prova-foto-immagine" alt="La foto con gli occhiali">
+          <div class="prova-foto-bottoni">
+            <a class="prova-scarica" download="occhiali.png">Scarica</a>
+            <button class="prova-altra">Scattane un'altra</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="bottone-webcam">Accendi la webcam</button>
+  </section>
+
+  <!-- la vista ingrandita: si apre al clic su una scheda -->
+  <dialog class="galleria-finestra">
+    <button class="finestra-chiudi" aria-label="Chiudi">✕</button>
+    <button class="finestra-prima" aria-label="Vista precedente">←</button>
+    <figure>
+      <img class="finestra-immagine" alt="">
+      <figcaption class="finestra-nome"></figcaption>
+    </figure>
+    <button class="finestra-dopo" aria-label="Vista successiva">→</button>
+  </dialog>
+
+<script type="module" src="js/video.js"></script>
+<script type="module" src="js/galleria.js"></script>
+<script type="module" src="js/stanghette.js"></script>
+<script type="module" src="js/esploso.js"></script>
+<script type="module" src="js/webcam.js"></script>
+</body>
+</html>
