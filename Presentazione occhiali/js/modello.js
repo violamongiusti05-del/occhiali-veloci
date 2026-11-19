@@ -5,7 +5,8 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-export const FILE_MODELLO = '../models/Occhiali%20finiti.glb';
+// il modello sta nella stessa cartella di index.html (così funziona anche su GitHub Pages)
+export const FILE_MODELLO = 'models_occhiali_veloci.glb';
 
 // le parti da rendere semi-trasparenti (le lenti), come nell'album
 const TRASPARENTI = ['Lente'];
